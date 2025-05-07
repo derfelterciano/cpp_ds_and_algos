@@ -77,7 +77,7 @@ void LinkedList<T>::prepend(const T& val) {
 
 template <typename T>
 void LinkedList<T>::prepend(T&& val) {
-    Node* newNode = new Node(move(val));
+    Node* newNode = new Node(std::move(val));
 
     // set the new node to become the head
     newNode->next = head_;
@@ -117,7 +117,7 @@ void LinkedList<T>::append(const T& val) {
 
 template <typename T>
 void LinkedList<T>::append(T&& val) {
-    Node* newNode = new Node(move(val));
+    Node* newNode = new Node(std::move(val));
 
     // set the previous to become the new tail
     newNode->prev = tail_;
