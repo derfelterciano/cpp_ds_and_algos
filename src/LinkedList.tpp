@@ -1,8 +1,10 @@
-#include "../headers/LinkedList.hpp"
-
+#pragma once
 #include <initializer_list>
 #include <iostream>
+#include <iterator>
 #include <utility>
+
+#include "../headers/LinkedList.hpp"
 
 using namespace std;
 
@@ -88,6 +90,46 @@ void LinkedList<T>::prepend(T&& val) {
 
     if (!tail_) {
         tail_ = newNode;
+    }
+
+    ++size_;
+}
+
+template <typename T>
+void LinkedList<T>::append(const T& val) {
+    Node* newNode = new Node(val);
+
+    // set the previous to become the new tail
+    newNode->prev = tail_;
+    newNode->next = nullptr;
+
+    if (tail_) {
+        tail_->next = newNode;
+    }
+    tail_ = newNode;
+
+    if (!head_) {
+        head_ = newNode;
+    }
+
+    ++size_;
+}
+
+template <typename T>
+void LinkedList<T>::append(T&& val) {
+    Node* newNode = new Node(move(val));
+
+    // set the previous to become the new tail
+    newNode->prev = tail_;
+    newNode->next = nullptr;
+
+    if (tail_) {
+        tail_->next = newNode;
+    }
+    tail_ = newNode;
+
+    if (!head_) {
+        head_ = newNode;
     }
 
     ++size_;

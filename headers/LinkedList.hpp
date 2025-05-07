@@ -80,3 +80,5 @@ class LinkedList {
     // === Utils ===
     void reverse() noexcept;
 };
+
+#include "../src/LinkedList.tpp"
