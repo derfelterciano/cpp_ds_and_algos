@@ -63,8 +63,8 @@ class LinkedList {
     void append(const T& val);
     void append(T&& val);
 
-    void pop_front();
-    void pop_back();
+    T pop_front();
+    T pop_back();
 
     void insert(std::size_t idx, const T& value);
     void insert(std::size_t idx, T&& value);
@@ -79,6 +79,7 @@ class LinkedList {
 
     // === Utils ===
     void reverse() noexcept;
+    void print() const;
 };
 
-#include "../src/LinkedList.tpp"
+#include "LinkedList.tpp"
