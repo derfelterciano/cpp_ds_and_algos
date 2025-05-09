@@ -26,8 +26,9 @@ A library of data structures and algorithms in C++
 
 For M1 MacOs use leak for memory leaks
 
+# Core DS & Algorithms for Maze Generation & Solving
+
 ```text
-Core DS & Algorithms for Maze Generation & Solving
 Data Structures
 
     Vector<T> (your dynamic array)
