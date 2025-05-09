@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "../include/ds/LinkedList.hpp"
+#include "ds/LinkedList.hpp"
 
 int main() {
     using std::cout;
@@ -113,6 +113,12 @@ int main() {
     ls.reverse();  // [baz,bar,foo]
     cout << "String list: ";
     ls.print();
+
+    // test comparison
+    LinkedList<int> a{1, 2, 3}, b{1, 2, 3}, c{4, 5};
+
+    assert(a == b);
+    assert(a != c);
 
     cout << "All tests passed!\n";
     return 0;

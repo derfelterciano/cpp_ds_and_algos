@@ -50,4 +50,12 @@ class Queue {
     void clear() noexcept {
         container_.clear();
     }
+
+    // comparisons
+    bool operator==(const Queue& rhs) const noexcept {
+        return container_ == rhs.container_;
+    }
+    bool operator!=(const Queue& rhs) const noexcept {
+        return !(*this == rhs);
+    }
 };

@@ -49,4 +49,12 @@ class Stack {
     void clear() noexcept {
         container_.clear();
     }
+
+    // comparisons
+    bool operator==(const Stack& rhs) const noexcept {
+        return container_ == rhs.container_;
+    }
+    bool operator!=(const Stack& rhs) const noexcept {
+        return !(*this == rhs);
+    }
 };

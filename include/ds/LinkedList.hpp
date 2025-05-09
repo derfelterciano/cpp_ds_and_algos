@@ -80,6 +80,12 @@ class LinkedList {
     // === Utils ===
     void reverse() noexcept;
     void print() const;
+
+    // === comparisons ===
+    bool operator==(const LinkedList& rhs) const noexcept;
+    bool operator!=(const LinkedList& rhs) const noexcept {
+        return !(*this == rhs);
+    }
 };
 
 #include "LinkedList.tpp"

@@ -459,3 +459,22 @@ LinkedList<T>& LinkedList<T>::operator=(LinkedList&& rhs) noexcept {
     }
     return *this;
 }
+
+// === comparisons ===
+
+template <typename T>
+bool LinkedList<T>::operator==(const LinkedList& rhs) const noexcept {
+    if (len() != rhs.len()) return false;
+
+    Node* a = head_;
+    Node* b = rhs.head_;
+
+    while (a != nullptr) {
+        if (a->data != b->data) return false;
+
+        a = a->next;
+        b = b->next;
+    }
+
+    return true;
+}
