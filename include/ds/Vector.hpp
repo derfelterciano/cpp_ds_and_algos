@@ -12,8 +12,12 @@ class Vector {
     std::size_t size_     = 0;
     std::size_t capacity_ = 0;
 
-    // increases buffer size
+    /// increases buffer size
     void grow();
+
+    /// reallocates cap amount of memory
+    /// then moves data to newly allocated buffer
+    void reallocate(std::size_t cap);
 
    public:
     // De/Constructors
@@ -29,7 +33,7 @@ class Vector {
 
     // modifiers
     void push_back(const T& value);
-    void push_pack(T&& value);
+    void push_back(T&& value);
 
     T& pop_back();
 
@@ -56,7 +60,10 @@ class Vector {
         return capacity_;
     }
 
+    /// Main memory controller
     void reserve(std::size_t new_cap);
+
+    /// Shrinks memory foot print if possible
     void shrink_fit();
 
     // utils

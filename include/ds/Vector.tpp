@@ -2,6 +2,8 @@
 
 #include <cstddef>
 #include <initializer_list>
+#include <new>
+#include <utility>
 
 #include "Vector.hpp"
 
@@ -16,6 +18,24 @@ void Vector<T>::grow() {
     reserve(newCapacity);
 
     return;
+}
+
+template <typename T>
+void Vector<T>::reallocate(std::size_t cap) {
+    // raw allocate
+    T* new_data = static_cast<T*>(::operator new[](cap * sizeof(T)));
+
+    // move and initalize if possible
+    for (size_t i = 0; i < size_; ++i) {
+        new (new_data + i) T(std::move_if_noexcept(data_[i]));
+        data_[i].~T();
+    }
+
+    // free old buffer
+    ::operator delete[](data_);
+
+    data_     = new_data;
+    capacity_ = cap;
 }
 
 // Constructors
@@ -71,4 +91,63 @@ Vector<T>::~Vector() {
 
     ::operator delete[](data_);
     data_ = nullptr;
+}
+
+// overload constrcutors
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector& rhs) {
+    if (this != &rhs) {
+        // destroy all our items
+        clear();
+
+        // reuse or grow
+        reserve(rhs.size_);
+
+        for (size_t i = 0; i < rhs.size_; ++i) {
+            new (data_ + i) T(rhs.data_[i]);
+        }
+        size_ = rhs.size_;
+    }
+
+    return *this;
+}
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(Vector<T>&& rhs) noexcept {
+    if (this != rhs) {
+        // destroy contents and free memory
+        clear();
+        ::operator delete[](data_);
+
+        data_     = rhs.data_;
+        size_     = rhs.size_;
+        capacity_ = rhs.capacity_;
+
+        // zero out rhs
+        rhs.data_     = nullptr;
+        rhs.size_     = 0;
+        rhs.capacity_ = 0;
+    }
+
+    return *this;
+}
+
+// capacity operations
+
+template <typename T>
+void Vector<T>::reserve(std::size_t new_cap) {
+    if (new_cap <= capacity_) return;
+
+    reallocate(new_cap);
+
+    return;
+}
+
+template <typename T>
+void Vector<T>::shrink_fit() {
+    if (capacity_ <= size_) return;
+
+    reallocate(size_);
+    return;
 }
