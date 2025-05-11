@@ -3,7 +3,9 @@
 #include <cstddef>
 #include <initializer_list>
 #include <new>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <utility>
 
 #include "Vector.hpp"
@@ -163,6 +165,20 @@ void Vector<T>::clear() noexcept {
 
     size_ = 0;
     return;
+}
+
+template <typename T>
+std::string Vector<T>::debug_vec() const {
+    ostringstream oss;
+    oss << "[";
+
+    for (size_t i = 0; i < len(); ++i) {
+        oss << data_[i];
+        if (i + 1 < size_) oss << ", ";
+    }
+
+    oss << "]";
+    return oss.str();
 }
 
 // Modifiers

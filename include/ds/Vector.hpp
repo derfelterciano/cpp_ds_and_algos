@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <iterator>
+#include <string>
 #include <utility>
 
 template <typename T>
@@ -56,7 +57,7 @@ class Vector {
     std::size_t len() const noexcept {
         return size_;
     }
-    std::size_t Capacity() const noexcept {
+    std::size_t capacity() const noexcept {
         return capacity_;
     }
 
@@ -67,7 +68,8 @@ class Vector {
     void shrink_fit();
 
     // utils
-    void clear() noexcept;
+    void        clear() noexcept;
+    std::string debug_vec() const;
 
     // iterators
     T* begin() noexcept {
