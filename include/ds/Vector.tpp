@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <new>
+#include <stdexcept>
 #include <utility>
 
 #include "Vector.hpp"
@@ -162,4 +163,107 @@ void Vector<T>::clear() noexcept {
 
     size_ = 0;
     return;
+}
+
+// Modifiers
+
+template <typename T>
+void Vector<T>::push_back(const T& value) {
+    if (size_ == capacity_) grow();
+
+    new (data_ + size_) T(value);
+
+    ++size_;
+}
+
+template <typename T>
+void Vector<T>::push_back(T&& value) {
+    if (size_ == capacity_) grow();
+
+    new (data_ + size_) T(move(value));
+
+    ++size_;
+}
+
+template <typename T>
+T Vector<T>::pop_back() {
+    if (size_ == 0) throw out_of_range("popping on an empty vector!");
+    --size_;
+
+    T tmp = move(data_[size_]);
+    data_[size_].~T();
+
+    return tmp;
+}
+
+// Accessors
+
+template <typename T>
+T& Vector<T>::at(std::size_t idx) {
+    if (idx >= size_)
+        throw out_of_range("[Vector::at()] idx is out of range in vector!");
+
+    return data_[idx];
+}
+
+template <typename T>
+const T& Vector<T>::at(std::size_t idx) const {
+    if (idx >= size_)
+        throw out_of_range("[Vector::at()] idx is out of range in vector!");
+
+    return data_[idx];
+}
+
+template <typename T>
+T& Vector<T>::operator[](std::size_t idx) {
+    return data_[idx];
+}
+
+template <typename T>
+const T& Vector<T>::operator[](std::size_t idx) const {
+    return data_[idx];
+}
+
+template <typename T>
+T& Vector<T>::front() {
+    if (size_ == 0)
+        throw out_of_range("[Vector::front()] This vector is empty!");
+
+    return data_[0];
+}
+
+template <typename T>
+const T& Vector<T>::front() const {
+    if (size_ == 0)
+        throw out_of_range("[Vector::front()] This vector is empty!");
+
+    return data_[0];
+}
+
+template <typename T>
+T& Vector<T>::back() {
+    if (size_ == 0)
+        throw out_of_range("[Vector::back()] This vector is empty!");
+
+    return data_[size_ - 1];
+}
+
+template <typename T>
+const T& Vector<T>::back() const {
+    if (size_ == 0)
+        throw out_of_range("[Vector::back()] This vector is empty!");
+
+    return data_[size_ - 1];
+}
+
+// comparators
+template <typename T>
+bool Vector<T>::operator==(const Vector& rhs) const noexcept {
+    if (len() != rhs.len()) return false;
+
+    for (size_t i = 0; i < len(); ++i) {
+        if (data_[i] != rhs.data_[i]) return false;
+    }
+
+    return true;
 }

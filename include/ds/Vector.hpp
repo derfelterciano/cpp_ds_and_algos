@@ -35,7 +35,7 @@ class Vector {
     void push_back(const T& value);
     void push_back(T&& value);
 
-    T& pop_back();
+    T pop_back();
 
     // Accessors
     T&       at(std::size_t idx);
