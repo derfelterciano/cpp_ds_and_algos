@@ -115,7 +115,7 @@ Vector<T>& Vector<T>::operator=(const Vector& rhs) {
 
 template <typename T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& rhs) noexcept {
-    if (this != rhs) {
+    if (this != &rhs) {
         // destroy contents and free memory
         clear();
         ::operator delete[](data_);
@@ -149,5 +149,17 @@ void Vector<T>::shrink_fit() {
     if (capacity_ <= size_) return;
 
     reallocate(size_);
+    return;
+}
+
+// utils
+
+template <typename T>
+void Vector<T>::clear() noexcept {
+    for (size_t i = 0; i < size_; ++i) {
+        data_[i].~T();
+    }
+
+    size_ = 0;
     return;
 }
