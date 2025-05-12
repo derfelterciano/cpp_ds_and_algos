@@ -39,7 +39,7 @@ endforeach()
 # ——————————————————————————————————————————————————————————
 # 5) (Optional) Discover demos in examples/*.cpp
 #——————————————————————————————————————————————————————————
-file(GLOB EX_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/examples/*.cpp")
+file(GLOB EX_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 foreach(ex_src IN LISTS EX_SRCS)
   get_filename_component(ex_name ${ex_src} NAME_WE)
