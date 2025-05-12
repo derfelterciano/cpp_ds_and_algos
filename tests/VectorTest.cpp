@@ -85,6 +85,10 @@ int main() {
     for (auto it = vs.begin(); it != vs.end(); ++it) {
         concat += *it + ";";
     }
+    for (auto val : vs) {
+        std::cout << val << std::endl;
+    }
+
     assert(concat == "foo;bar;baz;");
 
     concat.clear();
