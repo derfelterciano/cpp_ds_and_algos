@@ -119,6 +119,9 @@ int main() {
     }
     assert(threw);
 
+    Vector<int> v10 = {1, 2, 3, 4, 5};
+    std::cout << v10.debug_vec() << std::endl;
+
     std::cout << "All Vector tests passed!\n";
 
     return 0;
