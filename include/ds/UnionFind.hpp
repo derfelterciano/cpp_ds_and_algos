@@ -56,7 +56,7 @@ class UnionFind {
     }
 
     /// check if a and b are the same set
-    bool connected(Index a, Index b) const noexcept {
+    bool connected(Index a, Index b) noexcept {
         return find(a) == find(b);
     }
 };
