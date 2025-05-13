@@ -120,7 +120,12 @@ int main() {
     assert(threw);
 
     Vector<int> v10 = {1, 2, 3, 4, 5};
+    v10.push_back(11);
     std::cout << v10.debug_vec() << std::endl;
+
+    Vector<Vector<int>> v11 = {{10}, {20, 30}};
+
+    std::cout << v11 << std::endl;
 
     std::cout << "All Vector tests passed!\n";
 

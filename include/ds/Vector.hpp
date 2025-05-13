@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <initializer_list>
 #include <iterator>
+#include <ostream>
 #include <string>
 #include <utility>
 
@@ -68,8 +69,12 @@ class Vector {
     void shrink_fit();
 
     // utils
-    void        clear() noexcept;
-    std::string debug_vec() const;
+    void                 clear() noexcept;
+    std::string          debug_vec() const;
+    friend std::ostream& operator<<(std::ostream& os, const Vector<T>& v) {
+        os << v.debug_vec();
+        return os;
+    }
 
     // iterators
     T* begin() noexcept {
