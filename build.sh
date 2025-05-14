@@ -15,9 +15,9 @@ cd "$BUILD_DIR"
 
 # Configure with Clang/Clang++
 cmake \
+  -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_C_COMPILER=clang \
   -DCMAKE_CXX_COMPILER=clang++ \
-  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   ..
 
 echo
