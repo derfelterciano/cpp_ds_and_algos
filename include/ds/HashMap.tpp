@@ -58,3 +58,35 @@ void HashMap<Key, T, Hash, KeyEqual>::rehash(std::size_t new_bucket_count) {
         }
     }
 }
+
+// modifiers
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+void HashMap<Key, T, Hash, KeyEqual>::insert(const Key& key, const T& val) {}
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+void HashMap<Key, T, Hash, KeyEqual>::insert(Key&& key, T&& val) {}
+
+// Lookup
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) {}
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+const T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) const {}
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+T& HashMap<Key, T, Hash, KeyEqual>::operator[](const Key& key) {}
+
+// removal and query
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+bool HashMap<Key, T, Hash, KeyEqual>::erase(const Key& key) {}
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+bool HashMap<Key, T, Hash, KeyEqual>::contains(const Key& key) const noexcept {}
+
+// capacity
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+void HashMap<Key, T, Hash, KeyEqual>::clear() noexcept {}
