@@ -2,6 +2,8 @@
 
 #include <cstddef>
 #include <initializer_list>
+#include <stdexcept>
+#include <utility>
 
 #include "HashMap.hpp"
 
@@ -62,31 +64,142 @@ void HashMap<Key, T, Hash, KeyEqual>::rehash(std::size_t new_bucket_count) {
 // modifiers
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-void HashMap<Key, T, Hash, KeyEqual>::insert(const Key& key, const T& val) {}
+void HashMap<Key, T, Hash, KeyEqual>::insert(const Key& key, const T& val) {
+    std::size_t idx = bucket_index(key);
+    Bucket&     b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        Pair& kv = b.at(i);
+
+        if (key_equal_(kv.first, key)) {
+            kv.second = val;
+            return;
+        }
+    }
+
+    b.append({key, val});
+    ++size_;
+
+    rehash_if_needed();
+}
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-void HashMap<Key, T, Hash, KeyEqual>::insert(Key&& key, T&& val) {}
+void HashMap<Key, T, Hash, KeyEqual>::insert(Key&& key, T&& val) {
+    std::size_t idx = bucket_index(key);
+    Bucket&     b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        Pair& kv = b.at(i);
+
+        if (key_equal_(kv.first, key)) {
+            kv.second = std::move(val);
+            return;
+        }
+    }
+
+    b.append({key, val});
+    ++size_;
+
+    rehash_if_needed();
+}
 
 // Lookup
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) {}
+T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) {
+    std::size_t idx = bucket_index(key);
+    Bucket&     b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        Pair& kv = b.at(i);
+
+        if (key_equal_(kv.first, key)) {
+            return kv.second;
+        }
+    }
+
+    throw std::out_of_range("[HashMap::at()] Key does not exist!");
+}
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-const T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) const {}
+const T& HashMap<Key, T, Hash, KeyEqual>::at(const Key& key) const {
+    std::size_t   idx = bucket_index(key);
+    const Bucket& b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        const Pair& kv = b.at(i);
+
+        if (key_equal_(kv.first, key)) {
+            return kv.second;
+        }
+    }
+
+    throw std::out_of_range("[HashMap::at()] Key does not exist!");
+}
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-T& HashMap<Key, T, Hash, KeyEqual>::operator[](const Key& key) {}
+T& HashMap<Key, T, Hash, KeyEqual>::operator[](const Key& key) {
+    std::size_t idx = bucket_index(key);
+    Bucket&     b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        Pair& kv = b[i];
+        if (key_equal_(kv.first, key)) {
+            return kv.second;
+        }
+    }
+
+    // just insert if key doesnt exist!
+    b.append({key, T()});
+    ++size_;
+    rehash_if_needed();
+
+    // return the new element
+    return b.back().second;
+}
 
 // removal and query
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-bool HashMap<Key, T, Hash, KeyEqual>::erase(const Key& key) {}
+bool HashMap<Key, T, Hash, KeyEqual>::erase(const Key& key) {
+    std::size_t idx = bucket_index(key);
+    Bucket&     b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        Pair& kv = b[i];
+        if (key_equal_(kv.first, key)) {
+            // remove node and update size
+            b.del(i);
+            --size_;
+            return true;
+        }
+    }
+
+    return false;
+}
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-bool HashMap<Key, T, Hash, KeyEqual>::contains(const Key& key) const noexcept {}
+bool HashMap<Key, T, Hash, KeyEqual>::contains(const Key& key) const noexcept {
+    std::size_t   idx = bucket_index(key);
+    const Bucket& b   = buckets_[idx];
+
+    for (std::size_t i = 0; i < b.len(); ++i) {
+        const Pair& kv = b[i];
+
+        if (key_equal_(kv.first, key)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // capacity
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
-void HashMap<Key, T, Hash, KeyEqual>::clear() noexcept {}
+void HashMap<Key, T, Hash, KeyEqual>::clear() noexcept {
+    for (Bucket& b : buckets_) {
+        b.clear();
+    }
+    size_ = 0;
+}
