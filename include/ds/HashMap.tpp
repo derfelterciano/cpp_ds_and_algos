@@ -232,3 +232,25 @@ void HashMap<Key, T, Hash, KeyEqual>::clear() noexcept {
     }
     size_ = 0;
 }
+
+// utils
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+std::ostream& operator<<(std::ostream&                          os,
+                         const HashMap<Key, T, Hash, KeyEqual>& m) {
+    os << "{";
+    bool first = true;
+    for (std::size_t bi = 0; bi < m.bucket_count(); ++bi) {
+        const auto& bucket = m.buckets_[bi];
+        for (std::size_t i = 0; i < bucket.len(); ++i) {
+            const auto& kv = bucket[i];
+
+            if (!first) os << ", ";
+            first = false;
+            os << "\"" << kv.first << "\": " << kv.second;
+        }
+    }
+
+    os << "}";
+    return os;
+}

@@ -17,12 +17,14 @@ int main() {
     assert(h1.contains("two"));
     assert(h1.at("one") == 1);
     assert(h1.at("two") == 2);
+    std::cout << h1 << std::endl;
 
     // overwrite
     h1.insert("one", 11);
     assert(h1.size() == 2);
     assert(h1.at("one") == 11);
     h1.insert("one", 1);
+    std::cout << h1 << std::endl;
 
     // operator[]
     assert(h1["two"] == 2);
@@ -33,6 +35,7 @@ int main() {
     h1["three"] = 3;
     assert(h1.size() == 3);
     assert(h1.at("three") == 3);
+    std::cout << h1 << std::endl;
 
     // erase
     assert(h1.erase("two"));
@@ -40,6 +43,7 @@ int main() {
     assert(h1.size() == 2);
     assert(!h1.erase("twenty"));
     assert(h1.size() == 2);
+    std::cout << h1 << std::endl;
 
     // throwing
     bool threw = false;
@@ -49,6 +53,7 @@ int main() {
         threw = true;
     }
     assert(threw);
+    std::cout << h1 << std::endl;
 
     HashMap<int, int> m2{{10, 100}, {20, 200}, {30, 300}};
     assert(m2.size() == 3);

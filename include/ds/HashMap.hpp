@@ -67,6 +67,11 @@ class HashMap {
     float load_factor() const noexcept {
         return float(size_) / buckets_.len();
     }
+
+    // utils
+    template <typename K, typename V, typename H, typename KE>
+    friend std::ostream& operator<<(std::ostream&               os,
+                                    const HashMap<K, V, H, KE>& m);
 };
 
 #include "HashMap.tpp"
