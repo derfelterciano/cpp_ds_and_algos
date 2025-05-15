@@ -32,12 +32,12 @@ class HashMap {
     HashMap();
     explicit HashMap(std::size_t bucket_count);
     HashMap(std::initializer_list<Pair> init);
-    HashMap(const HashMap& other)     = default;
-    HashMap(HashMap&& other) noexcept = default;
-    ~HashMap()                        = default;
+    HashMap(const HashMap& other) = default;
+    HashMap(HashMap&& other) noexcept;
+    ~HashMap() = default;
 
-    HashMap& operator=(const HashMap& rhs)     = default;
-    HashMap& operator=(HashMap&& rhs) noexcept = default;
+    HashMap& operator=(const HashMap& rhs) = default;
+    HashMap& operator=(HashMap&& rhs) noexcept;
 
     // modifiers
     void insert(const Key& key, const T& val);

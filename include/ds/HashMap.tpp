@@ -25,6 +25,29 @@ HashMap<Key, T, Hash, KeyEqual>::HashMap(std::initializer_list<Pair> init)
     }
 }
 
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+HashMap<Key, T, Hash, KeyEqual>::HashMap(HashMap&& other) noexcept
+    : buckets_(std::move(other.buckets_)),
+      size_(other.size_),
+      hasher_(std::move(other.hasher_)),
+      key_equal_(std::move(other.key_equal_)) {
+    other.size_ = 0;
+}
+
+template <typename Key, typename T, typename Hash, typename KeyEqual>
+HashMap<Key, T, Hash, KeyEqual>& HashMap<Key, T, Hash, KeyEqual>::operator=(
+    HashMap&& other) noexcept {
+    if (this != &other) {
+        buckets_    = std::move(other.buckets_);
+        size_       = other.size_;
+        hasher_     = std::move(other.hasher_);
+        key_equal_  = std::move(other.key_equal_);
+        other.size_ = 0;
+    }
+
+    return *this;
+}
+
 // private functions
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
@@ -54,10 +77,16 @@ void HashMap<Key, T, Hash, KeyEqual>::rehash(std::size_t new_bucket_count) {
     }
     size_ = 0;
 
-    for (auto& bucket : old_buckets) {
-        for (auto& kv : bucket) {
+    for (Bucket& bucket : old_buckets) {
+        // Linked List has no iteration method
+
+        for (std::size_t i = 0; i < bucket.len(); ++i) {
+            Pair& kv = bucket[i];
             insert(std::move(kv.first), std::move(kv.second));
         }
+        // for (auto& kv : bucket) {
+        //     insert(std::move(kv.first), std::move(kv.second));
+        // }
     }
 }
 
