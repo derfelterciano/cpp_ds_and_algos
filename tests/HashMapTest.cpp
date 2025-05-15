@@ -66,13 +66,13 @@ int main() {
     assert(m2.empty());
     assert(m2.size() == 0);
 
-    // 10) load factor & rehash growth
+    // 10) load factor & rehash growth [load factor changed to 2.0]
     HashMap<int, int> mh(2);
     mh.insert(1, 1);
     mh.insert(2, 4);
-    std::size_t bc_before = mh.bucket_count();
+    // std::size_t bc_before = mh.bucket_count();
     mh.insert(3, 9);  // should trigger rehash (load_factor > 1.0)
-    assert(mh.bucket_count() >= bc_before * 2);
+    // assert(mh.bucket_count() >= bc_before * 2);
     for (int i = 1; i <= 3; ++i) {
         assert(mh.contains(i));
         assert(mh.at(i) == i * i);
@@ -101,6 +101,25 @@ int main() {
         assert(mh_assign.contains(i));
         assert(mh_assign.at(i) == i * i);
     }
+
+    HashMap<int, int> m(10);
+    for (int i = 0; i < 20; ++i) {
+        m.insert(i, i * i);
+    }
+    std::cout << "2x load: " << m << std::endl;
+
+    // We still have 10 buckets, 20 items, so load_factor() == 2.0
+    assert(m.bucket_count() == 10);
+    assert(m.size() == 20);
+    assert(m.load_factor() == 2.0f);
+
+    // Inserting one more should push load_factor > 2.0 and trigger a rehash
+    m.insert(20, 200);
+    assert(m.size() == 21);
+    assert(m.load_factor() <= 2.0f);  // back under threshold
+    assert(m.bucket_count() > 10);    // bucket array has grown
+
+    std::cout << m << std::endl;
 
     std::cout << "All HashMap tests passed!\n";
 

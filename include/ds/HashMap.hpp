@@ -20,7 +20,7 @@ class HashMap {
     Hash     hasher_;
     KeyEqual key_equal_;
 
-    static constexpr float max_load_factor = 1.0f;
+    static constexpr float max_load_factor = 2.0f;
 
     std::size_t bucket_index(const Key& key) const noexcept;
 
