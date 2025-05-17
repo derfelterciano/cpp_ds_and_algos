@@ -82,4 +82,44 @@ void PriorityQueue<T, C>::push(T&& v) {
 }
 
 template <typename T, typename C>
-T PriorityQueue<T, C>::pop() {}
+T PriorityQueue<T, C>::pop() {
+    if (data_.is_empty())
+        throw std::out_of_range(
+            "[PriorityQueue:pop()] pop() on an empty queue!");
+
+    // grab root
+    T root = std::move(data_[0]);
+
+    // move last element as root
+    data_[0] = std::move(data_.back());
+
+    // remove old last element
+    data_.pop_back();
+
+    // sift "new root" down
+    if (!data_.is_empty()) {
+        sift_down(0);
+    }
+
+    return root;
+}
+
+template <typename T, typename C>
+const T& PriorityQueue<T, C>::top() const {
+    if (data_.is_empty())
+        throw std::out_of_range(
+            "[PriorityQueue::top()] Peeking an empty queue!");
+
+    return data_[0];
+}
+
+template <typename T, typename C>
+void PriorityQueue<T, C>::set_compare(C cmp) {
+    // change comparator
+    comp_ = std::move(cmp);
+
+    // heapify
+    for (std::size_t i = data_.len() / 2; i-- > 0;) {
+        sift_down(i);
+    }
+}
