@@ -8,10 +8,10 @@ class PriorityQueue {
     Vector<T> data_;
     Comp      comp_;
 
-    // restore heap by moving toward root
+    /// restore heap by moving toward root
     void sift_up(std::size_t idx);
 
-    // restore heap by moving toward leaves (down)
+    /// restore heap by moving toward leaves (down)
     void sift_down(std::size_t idx);
 
    public:
