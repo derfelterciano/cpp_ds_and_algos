@@ -49,9 +49,6 @@ class PriorityQueue {
     void clear() noexcept {
         data_.clear();
     }
-
-    // runtime comparator
-    void set_compare(Comp cmp);
 };
 
 #include "PriorityQueue.tpp"

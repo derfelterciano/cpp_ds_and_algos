@@ -112,14 +112,3 @@ const T& PriorityQueue<T, C>::top() const {
 
     return data_[0];
 }
-
-template <typename T, typename C>
-void PriorityQueue<T, C>::set_compare(C cmp) {
-    // change comparator
-    comp_ = std::move(cmp);
-
-    // heapify
-    for (std::size_t i = data_.len() / 2; i-- > 0;) {
-        sift_down(i);
-    }
-}
