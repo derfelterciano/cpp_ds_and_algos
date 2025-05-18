@@ -4,6 +4,9 @@
 #include <iostream>
 
 int main() {
+    using ds::PriorityQueue;
+    using ds::Vector;
+
     // 1) empty() / size() / exceptions
     PriorityQueue<int> pq;
     assert(pq.empty());

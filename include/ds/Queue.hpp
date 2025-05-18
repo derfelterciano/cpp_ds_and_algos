@@ -5,6 +5,8 @@
 
 #include "LinkedList.hpp"
 
+namespace ds {
+
 template <typename T>
 class Queue {
    private:
@@ -59,3 +61,4 @@ class Queue {
         return !(*this == rhs);
     }
 };
+}  // namespace ds

@@ -5,6 +5,8 @@
 
 #include "LinkedList.hpp"
 
+namespace ds {
+
 template <typename T>
 class Stack {
    private:
@@ -58,3 +60,4 @@ class Stack {
         return !(*this == rhs);
     }
 };
+}  // namespace ds

@@ -4,6 +4,7 @@
 #include <iostream>
 
 int main() {
+    using ds::UnionFind;
     using std::size_t;
 
     // create 5 singleton sets

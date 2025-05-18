@@ -7,6 +7,8 @@
 #include <string>
 #include <utility>
 
+namespace ds {
+
 template <typename T>
 class Vector {
    private:
@@ -97,4 +99,5 @@ class Vector {
     }
 };
 
+}  // namespace ds
 #include "Vector.tpp"

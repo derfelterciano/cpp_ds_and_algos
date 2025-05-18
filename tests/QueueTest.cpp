@@ -5,6 +5,7 @@
 #include "ds/Queue.hpp"
 
 int main() {
+    using ds::Queue;
     // — Default construction, is_empty(), len() —
     Queue<int> qi;
     assert(qi.is_empty());

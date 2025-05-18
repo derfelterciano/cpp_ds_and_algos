@@ -12,6 +12,7 @@
 
 using namespace std;
 
+namespace ds {
 // private functions
 template <typename T>
 void Vector<T>::grow() {
@@ -283,3 +284,4 @@ bool Vector<T>::operator==(const Vector& rhs) const noexcept {
 
     return true;
 }
+}  // namespace ds

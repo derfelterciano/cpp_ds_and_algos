@@ -5,6 +5,8 @@
 
 #include "Vector.hpp"
 
+namespace ds {
+
 /// Union Find with union by rank and path compressions
 /// Index = type used for elements (def: std::size_t)
 /// An index must be some sort of integral type
@@ -60,3 +62,4 @@ class UnionFind {
         return find(a) == find(b);
     }
 };
+}  // namespace ds

@@ -2,6 +2,8 @@
 
 #include "Vector.hpp"
 
+namespace ds {
+
 template <typename T, typename Comp = std::less<T>>
 class PriorityQueue {
    private:
@@ -50,5 +52,7 @@ class PriorityQueue {
         data_.clear();
     }
 };
+
+}  // namespace ds
 
 #include "PriorityQueue.tpp"

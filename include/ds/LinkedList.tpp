@@ -10,6 +10,8 @@
 #include "LinkedList.hpp"
 using namespace std;
 
+namespace ds {
+
 template <typename T>
 LinkedList<T>::LinkedList(){};
 
@@ -478,3 +480,4 @@ bool LinkedList<T>::operator==(const LinkedList& rhs) const noexcept {
 
     return true;
 }
+}  // namespace ds

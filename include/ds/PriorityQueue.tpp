@@ -5,6 +5,8 @@
 
 #include "PriorityQueue.hpp"
 
+namespace ds {
+
 // Private functions
 
 template <typename T, typename C>
@@ -112,3 +114,4 @@ const T& PriorityQueue<T, C>::top() const {
 
     return data_[0];
 }
+}  // namespace ds

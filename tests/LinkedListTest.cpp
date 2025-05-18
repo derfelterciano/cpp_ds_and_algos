@@ -6,6 +6,7 @@
 #include "ds/LinkedList.hpp"
 
 int main() {
+    using ds::LinkedList;
     using std::cout;
     using std::endl;
     // ——————————————————————————————————————————————————————————————

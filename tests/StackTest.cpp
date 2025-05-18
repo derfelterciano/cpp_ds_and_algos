@@ -3,6 +3,8 @@
 #include "ds/Stack.hpp"
 
 int main() {
+    using ds::Stack;
+
     // — Default construction, is_empty(), len() —
     Stack<int> si;
     assert(si.is_empty());

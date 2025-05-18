@@ -4,6 +4,8 @@
 #include <initializer_list>
 #include <utility>
 
+namespace ds {
+
 template <typename T>
 class LinkedList {
    private:
@@ -87,5 +89,5 @@ class LinkedList {
         return !(*this == rhs);
     }
 };
-
+}  // namespace ds
 #include "LinkedList.tpp"

@@ -7,6 +7,8 @@
 #include "LinkedList.hpp"
 #include "Vector.hpp"
 
+namespace ds {
+
 template <typename Key, typename T, typename Hash = std::hash<Key>,
           typename KeyEqual = std::equal_to<Key>>
 class HashMap {
@@ -73,5 +75,5 @@ class HashMap {
     friend std::ostream& operator<<(std::ostream&               os,
                                     const HashMap<K, V, H, KE>& m);
 };
-
+}  // namespace ds
 #include "HashMap.tpp"

@@ -3,6 +3,7 @@
 #include <string>
 
 int main() {
+    using ds::HashMap;
     // Default map
     HashMap<std::string, int> h1;
     assert(h1.empty());

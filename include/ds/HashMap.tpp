@@ -7,6 +7,8 @@
 
 #include "HashMap.hpp"
 
+namespace ds {
+
 // c-tors
 
 template <typename Key, typename T, typename Hash, typename KeyEqual>
@@ -254,3 +256,4 @@ std::ostream& operator<<(std::ostream&                          os,
     os << "}";
     return os;
 }
+}  // namespace ds

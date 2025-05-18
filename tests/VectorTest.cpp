@@ -5,6 +5,8 @@
 #include "ds/Vector.hpp"
 
 int main() {
+    using ds::Vector;
+
     // constructor
     Vector<int> v;
     assert(v.is_empty());
