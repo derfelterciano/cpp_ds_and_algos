@@ -8,14 +8,14 @@ A library of data structures and algorithms in C++
 
 # Data structures
 
-- Doubly Linked List
-- Stack
-- Queue
-- Dynamic Array
-- Union Find
-- PriorityQueue / MinHeap
-- Hashmap<K, V>
-- Graph (using adjencey sparse matrix)
+- [x] Doubly Linked List
+- [x] Stack
+- [x] Queue
+- [x] Dynamic Array
+- [x] Union Find
+- [x] PriorityQueue / MinHeap
+- [x] Hashmap<K, V>
+- [x] Graph (using adjencey sparse matrix)
 
 # Algorithms
 
