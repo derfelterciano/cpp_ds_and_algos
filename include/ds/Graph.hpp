@@ -13,7 +13,7 @@ template <typename Vertex, typename Weight = double,
           typename Hash     = std::hash<Vertex>,
           typename KeyEqual = std::equal_to<Vertex>>
 class Graph {
-   private:
+   public:
     struct Edge {
         Vertex to;
         Weight w;
@@ -24,10 +24,6 @@ class Graph {
 
     using AdjList = LinkedList<Edge>;
 
-    HashMap<Vertex, AdjList, Hash, KeyEqual> adj_;
-    std::size_t                              edge_count_ = 0;
-
-   public:
     // c-tors / d-tors
 
     explicit Graph() noexcept = default;
@@ -83,6 +79,10 @@ class Graph {
     std::size_t num_edges() const noexcept {
         return edge_count_;
     }
+
+   private:
+    HashMap<Vertex, AdjList, Hash, KeyEqual> adj_;
+    std::size_t                              edge_count_ = 0;
 };
 
 }  // namespace ds
