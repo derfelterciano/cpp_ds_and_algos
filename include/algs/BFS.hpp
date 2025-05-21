@@ -3,7 +3,6 @@
 #include <cstddef>
 #include <ds/HashMap.hpp>
 #include <functional>
-#include <stdexcept>
 
 #include "ds/Graph.hpp"
 #include "ds/Queue.hpp"
