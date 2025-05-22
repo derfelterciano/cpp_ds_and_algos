@@ -17,7 +17,7 @@ enum class DFSState { Discover, Finish };
 ///
 /// Returns the parent‐map for every reachable vertex.
 template <typename Vertex, typename Weight, typename Hash, typename KeyEqual>
-ds::HashMap<Vertex, Weight, Hash, KeyEqual> dfs(
+ds::HashMap<Vertex, Vertex, Hash, KeyEqual> dfs(
     const ds::Graph<Vertex, Weight, Hash, KeyEqual> graph, const Vertex& start,
     std::function<void(const Vertex&, DFSState)> onVisit = {}) {
     using ParentMap  = ds::HashMap<Vertex, Vertex, Hash, KeyEqual>;
