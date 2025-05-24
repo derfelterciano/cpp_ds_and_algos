@@ -13,13 +13,12 @@ namespace astar {
 
 template <typename Vertex, typename Weight = double,
           typename Hash     = std::hash<Vertex>,
-          typename KeyEqual = std::equal_to<Vertex>>
+          typename KeyEqual = std::equal_to<Vertex>, typename Heuristic>
 std::tuple<ds::HashMap<Vertex, Weight, Hash, KeyEqual>,  // gscore map
            ds::HashMap<Vertex, Vertex, Hash, KeyEqual>   // parent map
            >
 a_star(const ds::Graph<Vertex, Weight, Hash, KeyEqual>& graph,
-       const Vertex& start, const Vertex& goal,
-       std::function<Weight(const Vertex&)> heuristic) {
+       const Vertex& start, const Vertex& goal, Heuristic&& heuristic) {
     using DistMap   = ds::HashMap<Vertex, Weight, Hash, KeyEqual>;
     using ParentMap = ds::HashMap<Vertex, Vertex, Hash, KeyEqual>;
     using PQElem    = std::pair<Weight, Vertex>;
@@ -63,6 +62,35 @@ a_star(const ds::Graph<Vertex, Weight, Hash, KeyEqual>& graph,
     }
 
     return {std::move(gScore), std::move(parent)};
+}
+
+template <typename Vertex, typename Hash, typename KeyEqual>
+ds::Vector<Vertex> reconstruct_path(
+    const ds::HashMap<Vertex, Vertex, Hash, KeyEqual>& parent,
+    const Vertex& start, const Vertex& goal) {
+    ds::Vector<Vertex> path;
+    Vertex             current = goal;
+
+    while (current != start) {
+        path.push_back(current);
+        if (!parent.contains(current)) {
+            // if goal is not reachable
+            path.clear();
+            return path;
+        }
+
+        current = parent.at(current);
+    }
+    path.push_back(start);
+
+    // if path is reversed
+    for (std::size_t i = 0, j = path.len() - 1; i < j; ++i, --j) {
+        Vertex tmp = std::move(path[i]);
+        path[i]    = std::move(path[j]);
+        path[j]    = std::move(tmp);
+    }
+
+    return path;
 }
 
 }  // namespace astar

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD      17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS     OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_FLAGS_DEBUG "-xc++ -Wall -Wextra -Wpedantic -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g")
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wpedantic -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g")
 
 # ——————————————————————————————————————————————————————————
 # 2) Header‑only library target
