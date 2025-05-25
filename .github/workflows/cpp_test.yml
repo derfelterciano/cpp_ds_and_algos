@@ -48,13 +48,22 @@ jobs:
               libxrandr-dev \
               libxcursor-dev \
               libxi-dev \
+              libx11-dev \
+              libxinerama-dev \
               libudev-dev \
               libflac-dev \
               libvorbis-dev \
               libgl1-mesa-dev \
               libegl1-mesa-dev \
               libdrm-dev \
-              libgbm-dev
+              libgbm-dev \
+              libfreetype6-dev \
+              libgl1-mesa-dev \
+              libudev-dev \
+              libflac-dev \
+              libvorbis-dev \
+              libopenal-dev \
+              pkg-config
           elif [ "${{ runner.os }}" = "macOS" ]; then
             brew update
             brew install sfml
