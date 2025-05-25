@@ -13,12 +13,13 @@ namespace astar {
 
 template <typename Vertex, typename Weight = double,
           typename Hash     = std::hash<Vertex>,
-          typename KeyEqual = std::equal_to<Vertex>, typename Heuristic>
+          typename KeyEqual = std::equal_to<Vertex>>
 std::tuple<ds::HashMap<Vertex, Weight, Hash, KeyEqual>,  // gscore map
            ds::HashMap<Vertex, Vertex, Hash, KeyEqual>   // parent map
            >
 a_star(const ds::Graph<Vertex, Weight, Hash, KeyEqual>& graph,
-       const Vertex& start, const Vertex& goal, Heuristic&& heuristic) {
+       const Vertex& start, const Vertex& goal,
+       std::function<Weight(const Vertex&)> heuristic) {
     using DistMap   = ds::HashMap<Vertex, Weight, Hash, KeyEqual>;
     using ParentMap = ds::HashMap<Vertex, Vertex, Hash, KeyEqual>;
     using PQElem    = std::pair<Weight, Vertex>;
