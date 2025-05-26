@@ -19,12 +19,14 @@ A library of data structures and algorithms in C++
 
 # Algorithms
 
-- Depth First Search
-- Breadth First Search
+- [x] Depth First Search
+- [x] Breadth First Search
+- [x] Dijkstra
+- [x] A\*
 
 ## Notes
 
-For M1 MacOs use leak for memory leaks
+For M1 MacOs use `leak` for memory leaks
 
 # Core DS & Algorithms for Maze Generation & Solving
 
