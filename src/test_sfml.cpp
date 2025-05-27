@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

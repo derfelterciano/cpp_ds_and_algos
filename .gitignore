@@ -34,6 +34,8 @@
 # build dirs
 build*/
 .cache/
+out/
+.vs/
 
 # compile commands
 compile_commands.json
