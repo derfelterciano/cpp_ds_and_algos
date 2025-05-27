@@ -11,7 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # compiler specific options
 if(MSVC)
-  set(CMAKE_CXX_FLAGS_DEBUG "/W4 /WX /Zi")
+  set(CMAKE_CXX_FLAGS_DEBUG "/W4 /Zi")
 else()
   set(CMAKE_CXX_FLAGS_DEBUG
       "-Wall -Wextra -Wpedantic -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g"
