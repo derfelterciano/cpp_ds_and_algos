@@ -75,6 +75,10 @@ ds::Vector<Dir> get_unvisited_dirs(const Maze&                         maze,
 // pick random item from vector (pick random direction)
 template <typename T>
 const T& pick_random(const ds::Vector<T>& vec, std::mt19937& rng) {
+    if (vec.is_empty()) {
+        throw std::runtime_error("[pick_random()] Can't pick from an empty vector!");
+    }
+
     std::uniform_int_distribution<std::size_t> dist(0, vec.len() - 1);
     return vec[dist(rng)];
 }
