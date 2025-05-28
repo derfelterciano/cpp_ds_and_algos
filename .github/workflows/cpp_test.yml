@@ -99,9 +99,9 @@ jobs:
       - name: Configure CMake (windows)
         if: runner.os == 'Windows'
         shell: pwsh
-        run: >
+        run: |
           cmake -S $env:GITHUB_WORKSPACE -B $env:GITHUB_WORKSPACE/BUILD \
-            -G ${{ matrix.generator }} \
+            -G "${{ matrix.generator }}" \
             -A ${{ matrix.arch }} \
             -T ${{ matrix.toolset }}
 
