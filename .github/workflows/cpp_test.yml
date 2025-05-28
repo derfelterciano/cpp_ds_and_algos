@@ -125,5 +125,5 @@ jobs:
       - name: Test (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
-        working-directory: $env:GITHUB_WORKSPACE/build
+        working-directory: ${{ github.workspace }}/build
         run: ctest -C ${{ matrix.build_type }} --output-on-failure
