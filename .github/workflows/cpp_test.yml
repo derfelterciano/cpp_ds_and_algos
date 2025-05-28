@@ -100,10 +100,11 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          cmake -S $env:GITHUB_WORKSPACE -B $env:GITHUB_WORKSPACE/BUILD \
-            -G "${{ matrix.generator }}" \
-            -A ${{ matrix.arch }} \
-            -T ${{ matrix.toolset }}
+          cmake -S $env:GITHUB_WORKSPACE -B $env:GITHUB_WORKSPACE/BUILD `
+            -G "${{ matrix.generator }}" `
+            -A ${{ matrix.arch }} `
+            -T ${{ matrix.toolset }} `
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
 
       - name: Build (Linux / MacOS)
         if: runner.os != 'Windows'
