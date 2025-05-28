@@ -10,7 +10,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # compiler specific options
-if(MSVC)
+if(MSVC AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_CXX_FLAGS_DEBUG
+      "-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g"
+  )
+elseif(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG "/W4 /Zi")
 else()
   set(CMAKE_CXX_FLAGS_DEBUG

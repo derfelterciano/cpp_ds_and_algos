@@ -1,0 +1,20 @@
+{
+	"version": 3,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 15
+	},
+	"configurePresets": [
+		{
+			"name": "default",
+			"displayName": "Default Build with clang",
+			"description": "Builds in ./build using clang",
+			"generator": "Visual Studio 17 2022",
+			"binaryDir": "${sourceDir}/build",
+			"toolset": "ClangCL",
+			"cacheVariables": {
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+			}
+		}
+	]
+}
