@@ -12,8 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # compiler specific options
 if(MSVC AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS_DEBUG
-      "-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g"
-  )
+      "-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -g")
 elseif(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG "/W4 /Zi")
 else()
@@ -74,3 +73,7 @@ file(GLOB LIB_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/*.cpp")
 add_executable(test_sfml src/test_sfml.cpp ${LIB_SRC})
 target_include_directories(test_sfml PRIVATE src/lib)
 target_link_libraries(test_sfml PRIVATE ds SFML::Graphics)
+
+add_executable(maze src/maze.cpp ${LIB_SRC})
+target_include_directories(maze PRIVATE src/lib)
+target_link_libraries(maze PRIVATE ds SFML::Graphics)
