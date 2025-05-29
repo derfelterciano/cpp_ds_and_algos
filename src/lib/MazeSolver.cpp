@@ -6,6 +6,8 @@
 #include <algs/Dijkstra.hpp>
 #include <ds/Graph.hpp>
 #include <ds/Vector.hpp>
+#include <functional>
+#include <utility>
 
 #include "Maze.hpp"
 
@@ -53,7 +55,7 @@ ds::Graph<vrtx> maze_to_graph(const Maze& maze) {
 
             // left
             if (!maze.cell(i, j).left_wall && maze.in_bounds(i, j - 1)) {
-                graph.add_edge(curr, vrtx{i, j + 1});
+                graph.add_edge(curr, vrtx{i, j - 1});
             }
         }
     }
@@ -64,4 +66,32 @@ ds::Graph<vrtx> maze_to_graph(const Maze& maze) {
 ds::Vector<vrtx> solve(const ds::Graph<vrtx>& graph, vrtx start, vrtx end,
                        SolveMethod method) {
     ds::HashMap<vrtx, vrtx> came_from;
+    switch (method) {
+        case SolveMethod::DFS: {
+            came_from = algs::dfs(graph, start);
+            break;
+        }
+        case SolveMethod::BFS: {
+            auto [dist, parent] = algs::bfs(graph, start);
+            came_from           = parent;
+            break;
+        }
+        case SolveMethod::DIJKSTRA: {
+            auto [dist, parent] = algs::dijkstra(graph, start);
+            came_from           = parent;
+            break;
+        }
+        default:
+            throw std::invalid_argument("Unknown Solve Method!");
+    }
+
+    return reconstruct_path(start, end, came_from);
+}
+
+ds::Vector<vrtx> solve_maze(const Maze& maze, SolveMethod method) {
+    ds::Graph<vrtx> graph = maze_to_graph(maze);
+    vrtx            start = maze.get_start();
+    vrtx            end   = maze.get_end();
+
+    return solve(graph, start, end, method);
 }
