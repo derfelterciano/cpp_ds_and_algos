@@ -64,20 +64,36 @@ ds::Graph<vrtx> maze_to_graph(const Maze& maze) {
 }
 
 ds::Vector<vrtx> solve(const ds::Graph<vrtx>& graph, vrtx start, vrtx end,
-                       SolveMethod method) {
+                       SolveMethod                      method,
+                       std::function<void(const vrtx&)> onVisit) {
     ds::HashMap<vrtx, vrtx> came_from;
     switch (method) {
         case SolveMethod::DFS: {
-            came_from = algs::dfs(graph, start);
+            auto adapted =
+                onVisit
+                    ? [&](const vrtx& v, algs::DFSState) { return onVisit(v); }
+                    : std::function<void(const vrtx&, algs::DFSState)>{};
+            came_from = algs::dfs(graph, start, adapted);
             break;
         }
         case SolveMethod::BFS: {
-            auto [dist, parent] = algs::bfs(graph, start);
+            auto adapted =
+                onVisit
+                    ? [&](const vrtx& v, algs::BFSState) { return onVisit(v); }
+                    : std::function<void(const vrtx&, algs::BFSState)>{};
+
+            auto [dist, parent] = algs::bfs(graph, start, adapted);
             came_from           = parent;
             break;
         }
         case SolveMethod::DIJKSTRA: {
-            auto [dist, parent] = algs::dijkstra(graph, start);
+            auto adapted =
+                onVisit
+                    ? [&](const vrtx& v,
+                          algs::DijkstraState) { return onVisit(v); }
+                    : std::function<void(const vrtx&, algs::DijkstraState)>{};
+
+            auto [dist, parent] = algs::dijkstra(graph, start, adapted);
             came_from           = parent;
             break;
         }
@@ -88,10 +104,11 @@ ds::Vector<vrtx> solve(const ds::Graph<vrtx>& graph, vrtx start, vrtx end,
     return reconstruct_path(start, end, came_from);
 }
 
-ds::Vector<vrtx> solve_maze(const Maze& maze, SolveMethod method) {
+ds::Vector<vrtx> solve_maze(const Maze& maze, SolveMethod method,
+                            std::function<void(const vrtx&)> onVisit) {
     ds::Graph<vrtx> graph = maze_to_graph(maze);
     vrtx            start = maze.get_start();
     vrtx            end   = maze.get_end();
 
-    return solve(graph, start, end, method);
+    return solve(graph, start, end, method, onVisit);
 }

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <ds/Stack.hpp>
 #include <ds/Vector.hpp>
+#include <functional>
 #include <random>
 #include <utility>
 
@@ -76,7 +77,8 @@ ds::Vector<Dir> get_unvisited_dirs(const Maze&                         maze,
 template <typename T>
 const T& pick_random(const ds::Vector<T>& vec, std::mt19937& rng) {
     if (vec.is_empty()) {
-        throw std::runtime_error("[pick_random()] Can't pick from an empty vector!");
+        throw std::runtime_error(
+            "[pick_random()] Can't pick from an empty vector!");
     }
 
     std::uniform_int_distribution<std::size_t> dist(0, vec.len() - 1);
@@ -85,7 +87,8 @@ const T& pick_random(const ds::Vector<T>& vec, std::mt19937& rng) {
 
 };  // namespace
 
-void gen_maze_dfs(Maze& maze, int start_row, int start_col) {
+void gen_maze_dfs(Maze& maze, int start_row, int start_col,
+                  std::function<void(const Maze&)> on_step) {
     int rows = maze.rows(), cols = maze.cols();
     maze.reset();
 
@@ -110,6 +113,9 @@ void gen_maze_dfs(Maze& maze, int start_row, int start_col) {
 
             visited[nr][nc] = true;
             stack.push({nr, nc});
+
+            // callback
+            if (on_step) on_step(maze);
         } else {
             stack.pop();
         }
