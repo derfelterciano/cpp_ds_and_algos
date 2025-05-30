@@ -34,6 +34,39 @@ int main(int argc, char* argv[]) {
         Maze        maze;
         SolveMethod solve_method = SolveMethod::DFS;
 
+        if (result.count("solve-method")) {
+            auto m = result["solve-method"].as<std::string>();
+            if (m == "dfs") {
+                solve_method = SolveMethod::DFS;
+            } else if (m == "bfs") {
+                solve_method = SolveMethod::BFS;
+            } else if (m == "dijkstra") {
+                solve_method = SolveMethod::DIJKSTRA;
+            } else {
+                std::cerr << "Unknown solve method: " << m << std::endl;
+                return 1;
+            }
+        }
+
+        if (result.count("generate")) {
+            int rows = result["rows"].as<int>();
+            int cols = result["cols"].as<int>();
+            maze     = Maze(rows, cols);
+            gen_maze_dfs(maze);
+
+            if (!result.count("output")) {
+                std::cerr << "Error: --output must be specified!" << std::endl;
+                return 1;
+            }
+
+            maze.save(result["output"].as<std::string>());
+            std::cout << "Maze generates with : (" << rows << "Rows x" << cols
+                      << "Cols)! \tFile saved at: "
+                      << result["output"].as<std::string>() << std::endl;
+
+            return 0;
+        }
+
         std::cerr << "No valid command provided. Use --help for usage."
                   << std::endl;
         return 1;
