@@ -78,8 +78,8 @@ int main(int argc, char* argv[]) {
             }
 
             maze.save(result["output"].as<std::string>());
-            std::cout << "Maze generates with : (" << rows << "Rows x" << cols
-                      << "Cols)! \tFile saved at: "
+            std::cout << "Maze generates with : (" << rows << " Rows x " << cols
+                      << " Cols)! \nFile saved at: "
                       << result["output"].as<std::string>() << std::endl;
 
             return 0;
