@@ -7,9 +7,11 @@
 #include <ds/Graph.hpp>
 #include <ds/Vector.hpp>
 #include <functional>
+#include <iostream>
 #include <utility>
 
 #include "Maze.hpp"
+#include "Utilities.hpp"
 
 namespace {
 ds::Vector<vrtx> reconstruct_path(const vrtx& start, const vrtx& end,
@@ -107,8 +109,9 @@ ds::Vector<vrtx> solve(const ds::Graph<vrtx>& graph, vrtx start, vrtx end,
 ds::Vector<vrtx> solve_maze(const Maze& maze, SolveMethod method,
                             std::function<void(const vrtx&)> onVisit) {
     ds::Graph<vrtx> graph = maze_to_graph(maze);
-    vrtx            start = maze.get_start();
-    vrtx            end   = maze.get_end();
+    std::cout << "Maze converted to graph!" << std::endl;
+    vrtx start = maze.get_start();
+    vrtx end   = maze.get_end();
 
     return solve(graph, start, end, method, onVisit);
 }

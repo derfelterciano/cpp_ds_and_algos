@@ -1,29 +1,18 @@
 #pragma once
-
-#include <ds/Graph.hpp>
 #include <ds/Vector.hpp>
 #include <functional>
 #include <ostream>
 #include <utility>
 
+#include "ds/Graph.hpp"
 #include "Maze.hpp"
-
-namespace std {
-template <>
-struct hash<std::pair<int, int>> {
-    std::size_t operator()(const std::pair<int, int>& p) const noexcept {
-        return std::hash<int>{}(p.first) ^ (std::hash<int>{}(p.second) << 1);
-    }
-};
-};  // namespace std
+#include "Utilities.hpp"
 
 enum class SolveMethod {
     DFS,
     BFS,
     DIJKSTRA,
 };
-
-using vrtx = std::pair<int, int>;
 
 // converts a maze obj into a graph object
 ds::Graph<vrtx> maze_to_graph(const Maze& maze);
