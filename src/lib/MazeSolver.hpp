@@ -3,6 +3,7 @@
 #include <ds/Graph.hpp>
 #include <ds/Vector.hpp>
 #include <functional>
+#include <ostream>
 #include <utility>
 
 #include "Maze.hpp"

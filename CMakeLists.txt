@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(DataStructsAndAlgos LANGUAGES CXX)
+project(MazeDataStructsAndAlgos LANGUAGES CXX)
 
 # ——————————————————————————————————————————————————————————
 # 1) C++ Standard
