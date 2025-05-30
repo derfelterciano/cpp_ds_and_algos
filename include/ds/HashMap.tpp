@@ -186,7 +186,8 @@ T& HashMap<Key, T, Hash, KeyEqual>::operator[](const Key& key) {
     rehash_if_needed();
 
     // return the new element
-    return b.back().second;
+    idx = bucket_index(key);
+    return buckets_[idx].back().second;
 }
 
 // removal and query

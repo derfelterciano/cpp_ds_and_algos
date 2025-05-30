@@ -77,3 +77,7 @@ target_link_libraries(test_sfml PRIVATE ds SFML::Graphics)
 add_executable(maze src/maze.cpp ${LIB_SRC})
 target_include_directories(maze PRIVATE src/lib)
 target_link_libraries(maze PRIVATE ds SFML::Graphics)
+
+add_executable(test_maze src/test_maze.cpp ${LIB_SRC})
+target_include_directories(test_maze PRIVATE src/lib)
+target_link_libraries(test_maze PRIVATE ds SFML::Graphics)
