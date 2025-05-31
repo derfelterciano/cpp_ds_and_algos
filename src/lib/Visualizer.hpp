@@ -5,6 +5,8 @@
 #include <ds/Vector.hpp>
 #include <functional>
 
+#define CELL_SIZE 24
+
 // draw a maze, no animation needed
 void visualize_maze(const Maze& maze);
 

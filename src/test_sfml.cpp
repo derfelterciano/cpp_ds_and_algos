@@ -7,8 +7,8 @@
 #include <cstddef>
 
 /// Generates a simple star
-sf::ConvexShape gen_star(float cx, float cy, float outer_rad, float inner_rad,
-                         std::size_t points = 5) {
+static sf::ConvexShape gen_star(float cx, float cy, float outer_rad,
+                                float inner_rad, std::size_t points = 5) {
     sf::ConvexShape star(points * 2);
 
     float angle_step = float(M_PI / points);

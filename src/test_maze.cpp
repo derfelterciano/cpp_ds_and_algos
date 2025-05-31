@@ -36,11 +36,12 @@ int main(int argc, char* argv[]) {
 
     std::cout << "path: " << print_path(path) << std::endl;
     */
-    Maze maze{50, 50};
+    Maze maze{20, 20};
+    visualize_maze_generation(maze);
 
-    gen_maze_dfs(maze);
-
-    visualize_maze(maze);
+    // gen_maze_dfs(maze);
+    //
+    // visualize_maze(maze);
 
     return 0;
 }
