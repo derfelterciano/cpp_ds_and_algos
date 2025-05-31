@@ -100,10 +100,21 @@ int main(int argc, char* argv[]) {
         }
 
         if (result.count("visualize-gen")) {
-            maze = Maze(20, 20);
-            gen_maze_dfs(maze);
+            int rows = result["rows"].as<int>();
+            int cols = result["cols"].as<int>();
 
-            visualize_maze(maze);
+            if (!result.count("output")) {
+                std::cerr << "Error: --output must be specified" << std::endl;
+                return 1;
+            }
+
+            maze = Maze(rows, cols);
+            visualize_maze_generation(maze);
+
+            std::string fp = result["output"].as<std::string>();
+            maze.save(fp);
+
+            std::cout << "Maze saved to: " << fp << std::endl;
 
             return 0;
         }
