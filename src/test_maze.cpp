@@ -26,6 +26,7 @@ std::string print_path(const ds::Vector<vrtx>& vec) {
 };  // namespace
 
 int main(int argc, char* argv[]) {
+    /*
     Maze        maze;
     SolveMethod solve_method = SolveMethod::DFS;
     maze.load("/Users/dterciano/Desktop/GitRepos/cpp_ds_and_algos/out.maze");
@@ -34,5 +35,12 @@ int main(int argc, char* argv[]) {
     std::cout << "Maze path length: " << path.len() << std::endl;
 
     std::cout << "path: " << print_path(path) << std::endl;
+    */
+    Maze maze{50, 50};
+
+    gen_maze_dfs(maze);
+
+    visualize_maze(maze);
+
     return 0;
 }

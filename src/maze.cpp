@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
             "o,output", "Output maze file", cxxopts::value<std::string>())(
             "solve-method", "Solve method (dfs,bfs,dijkstra [default: dfs])",
             cxxopts::value<std::string>()->default_value("dfs"))(
-            "vg, visualize-gen", "Visualizes maze generation")(
-            "vs,visual-solve", "Visualizes solving")("h,help", "Print usage");
+            "G, visualize-gen", "Visualizes maze generation")(
+            "S,visual-solve", "Visualizes solving")("h,help", "Print usage");
 
         auto result = options.parse(argc, argv);
         if (result.count("help")) {
@@ -96,6 +96,15 @@ int main(int argc, char* argv[]) {
             std::cout << "Maze path length: " << path.len() << std::endl;
 
             std::cout << "path: " << print_path(path) << std::endl;
+            return 0;
+        }
+
+        if (result.count("visualize-gen")) {
+            maze = Maze(20, 20);
+            gen_maze_dfs(maze);
+
+            visualize_maze(maze);
+
             return 0;
         }
 
