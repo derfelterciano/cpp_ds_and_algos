@@ -109,9 +109,8 @@ ds::Vector<vrtx> solve(const ds::Graph<vrtx>& graph, vrtx start, vrtx end,
 ds::Vector<vrtx> solve_maze(const Maze& maze, SolveMethod method,
                             std::function<void(const vrtx&)> onVisit) {
     ds::Graph<vrtx> graph = maze_to_graph(maze);
-    std::cout << "Maze converted to graph!" << std::endl;
-    vrtx start = maze.get_start();
-    vrtx end   = maze.get_end();
+    vrtx            start = maze.get_start();
+    vrtx            end   = maze.get_end();
 
     return solve(graph, start, end, method, onVisit);
 }

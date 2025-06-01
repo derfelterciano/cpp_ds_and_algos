@@ -1,11 +1,12 @@
 #pragma once
 
-#include <Maze.hpp>
-#include <MazeSolver.hpp>
 #include <ds/Vector.hpp>
 #include <functional>
+#include <Maze.hpp>
+#include <MazeSolver.hpp>
 
 #define CELL_SIZE 24
+#define ANIMATION_DELAY 20
 
 // draw a maze, no animation needed
 void visualize_maze(const Maze& maze);

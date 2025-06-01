@@ -1,12 +1,13 @@
 #include "Visualizer.hpp"
 
+#include <chrono>
+#include <ds/Vector.hpp>
+#include <functional>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
-#include <chrono>
-#include <functional>
 #include <thread>
 
 #include "Maze.hpp"
@@ -18,7 +19,8 @@ namespace {
 
 // Draws the maze given a window
 void draw_maze(sf::RenderWindow& window, const Maze& maze,
-               const ds::Vector<vrtx>& path = {}) {
+               const ds::Vector<vrtx>& path    = {},
+               const ds::Vector<vrtx>& visited = {}) {
     // rendering params
     int rows = maze.rows(), cols = maze.cols();
 
@@ -35,7 +37,16 @@ void draw_maze(sf::RenderWindow& window, const Maze& maze,
 
             sf::RectangleShape rect(sf::Vector2f(CELL_SIZE, CELL_SIZE));
             rect.setPosition({float(x), float(y)});
-            rect.setFillColor(sf::Color::White);
+
+            bool is_visited = false;
+            for (auto& v : visited) {
+                if (v.first == i && v.second == j) {
+                    is_visited = true;
+                    break;
+                }
+            }
+
+            rect.setFillColor(is_visited ? sf::Color::Blue : sf::Color::White);
             rect.setOutlineThickness(2);
             rect.setOutlineColor(sf::Color::White);
             window.draw(rect);
@@ -157,7 +168,7 @@ void visualize_maze_generation(
         window.display();
 
         // delay animation
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(ANIMATION_DELAY));
     };
 
     generator(maze, on_step);
@@ -168,6 +179,64 @@ void visualize_maze_generation(
         }
 
         draw_maze(window, maze);
+        window.display();
+    }
+}
+
+void visualize_maze_solving(
+    Maze& maze, SolveMethod method,
+    std::function<ds::Vector<vrtx>(const Maze&, SolveMethod,
+                                   std::function<void(const vrtx&)>)>
+        solve_fn) {
+    int rows = maze.rows(), cols = maze.cols();
+
+    unsigned int width  = static_cast<unsigned int>(cols * CELL_SIZE);
+    unsigned int height = static_cast<unsigned int>(rows * CELL_SIZE);
+
+    sf::RenderWindow window(sf::VideoMode({width, height}), "Maze Solver");
+
+    // tracking visited cells
+    ds::Vector<vrtx> visited;
+    bool             running = true;
+
+    // onVisit function
+    auto on_visit = [&](const vrtx& v) {
+        visited.push_back(v);
+
+        // stop animation when closed
+        while (const std::optional event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+                running = false;
+                return;
+            }
+        }
+
+        draw_maze(window, maze, {}, visited);
+        window.display();
+
+        // animation delay
+        std::this_thread::sleep_for(std::chrono::milliseconds(ANIMATION_DELAY));
+    };
+
+    if (!solve_fn) {
+        solve_fn = [](const Maze& m, SolveMethod sm, auto ov) {
+            return solve_maze(m, sm, ov);
+        };
+    }
+
+    ds::Vector<vrtx> path = solve_fn(maze, method, on_visit);
+
+    // display final path
+    while (window.isOpen() && running) {
+        while (const std::optional event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+        }
+
+        // draw
+        draw_maze(window, maze, path);
         window.display();
     }
 }

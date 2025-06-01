@@ -36,8 +36,9 @@ int main(int argc, char* argv[]) {
 
     std::cout << "path: " << print_path(path) << std::endl;
     */
-    Maze maze{20, 20};
-    visualize_maze_generation(maze);
+    Maze maze{20, 40};
+    gen_maze_dfs(maze);
+    visualize_maze_solving(maze, SolveMethod::BFS);
 
     // gen_maze_dfs(maze);
     //
