@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
             "o,output", "Output maze file", cxxopts::value<std::string>())(
             "solve-method", "Solve method (dfs,bfs,dijkstra [default: dfs])",
             cxxopts::value<std::string>()->default_value("dfs"))(
-            "G, visualize-gen", "Visualizes maze generation")(
-            "S,visual-solve", "Visualizes solving")("h,help", "Print usage");
+            "G,visualize-gen", "Visualizes maze generation")(
+            "S,visualize-solve", "Visualizes solving")("h,help", "Print usage");
 
         auto result = options.parse(argc, argv);
         if (result.count("help")) {
@@ -115,6 +115,28 @@ int main(int argc, char* argv[]) {
             maze.save(fp);
 
             std::cout << "Maze saved to: " << fp << std::endl;
+
+            return 0;
+        }
+
+        // let's make this so if no input is provided,
+        // then generate and solve that maze!
+        if (result.count("visualize-solve")) {
+            if (result.count("input")) {
+                maze.load(result["input"].as<std::string>());
+
+                std::cout << "Maze loaded!" << std::endl;
+            } else {
+                int rows = result["rows"].as<int>();
+                int cols = result["cols"].as<int>();
+
+                maze = Maze(rows, cols);
+                gen_maze_dfs(maze);
+            }
+
+            auto path = visualize_maze_solving(maze, solve_method);
+
+            std::cout << "Path length: " << path.len() << std::endl;
 
             return 0;
         }

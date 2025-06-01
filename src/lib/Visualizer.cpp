@@ -161,7 +161,9 @@ void visualize_maze_generation(
             if (event->is<sf::Event::Closed>()) {
                 window.close();
                 running = false;
-                return;
+
+                std::exit(0);
+                // return;
             }
         }
         draw_maze(window, mz);
@@ -178,12 +180,14 @@ void visualize_maze_generation(
             if (event->is<sf::Event::Closed>()) window.close();
         }
 
+        if (!window.isOpen() || !running) break;
+
         draw_maze(window, maze);
         window.display();
     }
 }
 
-void visualize_maze_solving(
+ds::Vector<vrtx> visualize_maze_solving(
     Maze& maze, SolveMethod method,
     std::function<ds::Vector<vrtx>(const Maze&, SolveMethod,
                                    std::function<void(const vrtx&)>)>
@@ -208,7 +212,11 @@ void visualize_maze_solving(
             if (event->is<sf::Event::Closed>()) {
                 window.close();
                 running = false;
-                return;
+
+                std::cout << "Window closed!" << std::endl;
+
+                std::exit(0);
+                // return;
             }
         }
 
@@ -225,8 +233,12 @@ void visualize_maze_solving(
         };
     }
 
-    ds::Vector<vrtx> path = solve_fn(maze, method, on_visit);
-
+    ds::Vector<vrtx> path;
+    try {
+        path = solve_fn(maze, method, on_visit);
+    } catch (const std::exception&) {
+        return {};
+    }
     // display final path
     while (window.isOpen() && running) {
         while (const std::optional event = window.pollEvent()) {
@@ -239,4 +251,6 @@ void visualize_maze_solving(
         draw_maze(window, maze, path);
         window.display();
     }
+
+    return path;
 }

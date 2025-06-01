@@ -18,11 +18,8 @@ void visualize_maze_generation(
     int start_row = 0, int start_col = 0);
 
 // draw maze solving with animation
-void visualize_maze_solving(
+ds::Vector<vrtx> visualize_maze_solving(
     Maze& maze, SolveMethod method,
     std::function<ds::Vector<vrtx>(const Maze&, SolveMethod,
                                    std::function<void(const vrtx&)>)>
         solve_fn = {});
-
-// visualize solution path
-void visualize_solution(const Maze& maze, const ds::Vector<vrtx>& path);
