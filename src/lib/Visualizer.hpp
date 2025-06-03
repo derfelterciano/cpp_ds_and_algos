@@ -6,7 +6,7 @@
 #include <MazeSolver.hpp>
 
 #define CELL_SIZE 24
-#define ANIMATION_DELAY 20
+#define ANIMATION_DELAY 10
 
 // draw a maze, no animation needed
 void visualize_maze(const Maze& maze);
